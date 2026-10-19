@@ -72,7 +72,7 @@ export default function LoginPage() {
                   <Typography variant="body2" color="text.secondary" sx={{ flexGrow: 1 }}>
                     {blurb}
                   </Typography>
-                  <Stack direction="row" spacing={1}>
+                  {/* <Stack direction="row" spacing={1}>
                     <Chip
                       size="small"
                       label={`${writes} write`}
@@ -80,7 +80,7 @@ export default function LoginPage() {
                       variant="outlined"
                     />
                     <Chip size="small" label={`${reads} read`} variant="outlined" />
-                  </Stack>
+                  </Stack> */}
                   <Form method="post">
                     <input type="hidden" name="userId" value={user.id} />
                     <Button
