@@ -8,6 +8,14 @@
   <strong>From teaser to IC memo, in one workspace.</strong><br />
   A demo of an app for private credit funds' investment teams: deals, securities, due diligence and investment committee memos.
 </p>
+<p align="center">
+  <a
+    target="_blank"
+    href="https://underwrite-demo.netlify.app/"
+  >
+    Live demo
+  </a>
+</p>
 
 <p align="center">
   <img alt="React" src="https://img.shields.io/badge/React-19%2B-61DAFB?logo=react&logoColor=white" />
