@@ -1,0 +1,30 @@
+/** Shared typography for rendered memo HTML and the Tiptap editor, so edit mode looks like preview mode. */
+export const memoBodySx = {
+  fontSize: 14,
+  lineHeight: 1.65,
+  color: "text.primary",
+  "& p": { m: 0, mb: 1.25 },
+  "& h3": { fontSize: 15, fontWeight: 700, mt: 2, mb: 0.75 },
+  "& ul, & ol": { pl: 3, mt: 0, mb: 1.25 },
+  "& li > p": { mb: 0.5 },
+  "& table": { borderCollapse: "collapse", width: "100%", mb: 1.75, tableLayout: "fixed" },
+  "& th, & td": {
+    border: "1px solid",
+    borderColor: "divider",
+    p: "6px 10px",
+    textAlign: "left",
+    verticalAlign: "top",
+    fontSize: 13,
+    position: "relative",
+  },
+  "& th": { bgcolor: "action.hover", fontWeight: 700 },
+  "& td > p, & th > p": { mb: 0 },
+  "& .ProseMirror": { outline: "none", minHeight: 72 },
+  "& .selectedCell:after": {
+    content: '""',
+    position: "absolute",
+    inset: 0,
+    bgcolor: "rgba(35,69,199,0.12)",
+    pointerEvents: "none",
+  },
+} as const;
