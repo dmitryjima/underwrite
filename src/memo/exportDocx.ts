@@ -29,20 +29,18 @@ const textRuns = (
   base: { size?: number; color?: string; bold?: boolean } = {},
 ): ParagraphChild[] =>
   runs.flatMap((r) =>
-    r.text
-      .split("\n")
-      .flatMap((part, i) => [
-        new TextRun({
-          text: part,
-          break: i > 0 ? 1 : undefined,
-          bold: r.bold || base.bold,
-          italics: r.italic,
-          underline: r.underline ? {} : undefined,
-          font: FONT,
-          size: base.size ?? 21,
-          color: base.color,
-        }),
-      ]),
+    r.text.split("\n").flatMap((part, i) => [
+      new TextRun({
+        text: part,
+        break: i > 0 ? 1 : undefined,
+        bold: r.bold || base.bold,
+        italics: r.italic,
+        underline: r.underline ? {} : undefined,
+        font: FONT,
+        size: base.size ?? 21,
+        color: base.color,
+      }),
+    ]),
   );
 
 const hairline = { style: BorderStyle.SINGLE, size: 4, color: "D5D9E3" };
