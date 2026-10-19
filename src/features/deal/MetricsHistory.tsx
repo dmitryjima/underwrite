@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import HistoryChart from "../../components/HistoryChart";
 import { FUND_POLICY } from "../../lib/deal-meta";
-import { cagr, num, type HistPoint, type HistoryRange } from "../../lib/history";
+import { getCompoundAnnualGrowth, num, type HistPoint, type HistoryRange } from "../../lib/history";
+import { type HistoryRow } from "../../data/history";
 import type { FinancialMetrics } from "../../types/diligence";
 
 const money = (n: number | undefined, currency = "USD") =>
@@ -62,47 +63,54 @@ export default function MetricsHistory({
   const rows: Row[] = [
     {
       label: "Revenue",
-      get: (m) => m.revenue?.amount,
-      fmt: (n) => money(n, cur),
-      trend: (a, b, y) => signed(cagr(a, b, y), "% CAGR"),
+      get: (m: HistoryRow["m"]) => m.revenue?.amount,
+      fmt: (n: number) => money(n, cur),
+      trend: (a: number, b: number, y: number) =>
+        signed(getCompoundAnnualGrowth(a, b, y), "% CAGR"),
     },
     {
       label: "EBITDA",
-      get: (m) => m.ebitda?.amount,
-      fmt: (n) => money(n, cur),
-      trend: (a, b, y) => signed(cagr(a, b, y), "% CAGR"),
+      get: (m: HistoryRow["m"]) => m.ebitda?.amount,
+      fmt: (n: number) => money(n, cur),
+      trend: (a: number, b: number, y: number) =>
+        signed(getCompoundAnnualGrowth(a, b, y), "% CAGR"),
     },
     {
       label: "EBITDA margin",
-      get: (m) => num.margin(m),
-      fmt: (n) => pct(n),
-      trend: (a, b) => (a !== undefined && b !== undefined ? signed(b - a, " pp") : "—"),
+      get: (m: HistoryRow["m"]) => num.margin(m),
+      fmt: (n: number) => pct(n),
+      trend: (a: number, b: number) =>
+        a !== undefined && b !== undefined ? signed(b - a, " pp") : "—",
     },
     {
       label: "Total debt",
-      get: (m) => m.totalDebt?.amount,
-      fmt: (n) => money(n, cur),
-      trend: (a, b, y) => signed(cagr(a, b, y), "% CAGR"),
+      get: (m: HistoryRow["m"]) => m.totalDebt?.amount,
+      fmt: (n: number) => money(n, cur),
+      trend: (a: number, b: number, y: number) =>
+        signed(getCompoundAnnualGrowth(a, b, y), "% CAGR"),
     },
     {
       label: "Cash",
-      get: (m) => m.cash?.amount,
-      fmt: (n) => money(n, cur),
-      trend: (a, b, y) => signed(cagr(a, b, y), "% CAGR"),
+      get: (m: HistoryRow["m"]) => m.cash?.amount,
+      fmt: (n: number) => money(n, cur),
+      trend: (a: number, b: number, y: number) =>
+        signed(getCompoundAnnualGrowth(a, b, y), "% CAGR"),
     },
     {
       label: "Leverage",
-      get: (m) => m.leverage,
-      fmt: (n) => (n === undefined ? "—" : `${n.toFixed(1)}x`),
-      trend: (a, b) => (a !== undefined && b !== undefined ? signed(b - a, "x") : "—"),
-      bad: (n) => (n ?? 0) > FUND_POLICY.maxLeverage,
+      get: (m: HistoryRow["m"]) => m.leverage,
+      fmt: (n: number) => (n === undefined ? "—" : `${n.toFixed(1)}x`),
+      trend: (a: number, b: number) =>
+        a !== undefined && b !== undefined ? signed(b - a, "x") : "—",
+      bad: (n: number) => (n ?? 0) > FUND_POLICY.maxLeverage,
     },
     {
       label: "NPL ratio",
-      get: (m) => m.nplRatio,
-      fmt: (n) => pct(n),
-      trend: (a, b) => (a !== undefined && b !== undefined ? signed(b - a, " pp") : "—"),
-      bad: (n) => (n ?? 0) > FUND_POLICY.maxNplRatio,
+      get: (m: HistoryRow["m"]) => m.nplRatio,
+      fmt: (n: number) => pct(n),
+      trend: (a: number, b: number) =>
+        a !== undefined && b !== undefined ? signed(b - a, " pp") : "—",
+      bad: (n: number) => (n ?? 0) > FUND_POLICY.maxNplRatio,
     },
   ].filter((r) => points.some((p) => r.get(p.m) !== undefined)) as Row[];
 
@@ -152,7 +160,7 @@ export default function MetricsHistory({
         {chart(
           "Revenue",
           (m) => m.revenue?.amount,
-          (n) => money(n, cur),
+          (n: number) => money(n, cur),
           false,
         )}
         {chart("EBITDA margin", (m) => num.margin(m), p1, false)}

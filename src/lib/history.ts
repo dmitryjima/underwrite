@@ -141,7 +141,11 @@ export const num = {
 };
 
 // Compound annual growth between the first and last point of a series (years = points - 1).
-export function cagr(first?: number, last?: number, years = 1): number | undefined {
+export function getCompoundAnnualGrowth(
+  first?: number,
+  last?: number,
+  years = 1,
+): number | undefined {
   if (!first || !last || first <= 0 || last <= 0 || years <= 0) return undefined;
   return (Math.pow(last / first, 1 / years) - 1) * 100;
 }
